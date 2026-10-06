@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Tu Palabra de Hoy | ODIN Fitness Club</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: #080808;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+}
+
+.container {
+    width: 100%;
+    max-width: 520px;
+    text-align: center;
+}
+
+.odin {
+    font-size: 15px;
+    letter-spacing: 5px;
+    font-weight: 700;
+    color: #b6ff00;
+    margin-bottom: 45px;
+}
+
+.cross {
+    font-size: 28px;
+    color: #ff2aa1;
+    margin-bottom: 15px;
+}
+
+.subtitle {
+    font-size: 12px;
+    letter-spacing: 4px;
+    color: #999;
+    margin-bottom: 12px;
+}
+
+h1 {
+    font-size: 32px;
+    margin: 0 0 35px;
+    letter-spacing: 1px;
+}
+
+.card {
+    border: 1px solid #282828;
+    border-radius: 22px;
+    padding: 35px 25px;
+    background: #101010;
+}
+
+.reference {
+    color: #b6ff00;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 22px;
+}
+
+.verse {
+    font-size: 23px;
+    line-height: 1.55;
+    font-weight: 500;
+}
+
+.line {
+    width: 45px;
+    height: 2px;
+    background: #ff2aa1;
+    margin: 30px auto;
+}
+
+.today {
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: #888;
+    margin-bottom: 15px;
+}
+
+.reflection {
+    font-size: 16px;
+    line-height: 1.65;
+    color: #d0d0d0;
+}
+
+.footer {
+    margin-top: 40px;
+    color: #777;
+    font-size: 13px;
+    letter-spacing: 1px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="odin">ODIN FITNESS CLUB</div>
+
+    <div class="cross">✝</div>
+
+    <div class="subtitle">UN MENSAJE PARA VOS</div>
+
+    <h1>TU PALABRA DE HOY</h1>
+
+    <div class="card">
+
+        <div class="reference" id="reference"></div>
+
+        <div class="verse" id="verse"></div>
+
+        <div class="line"></div>
+
+        <div class="today">PARA VOS HOY</div>
+
+        <div class="reflection" id="reflection"></div>
+
+    </div>
+
+    <div class="footer">
+        Que tengas un gran día.<br><br>
+        ODIN FITNESS CLUB
+    </div>
+
+</div>
+
+<script>
+
+const verses = [
+
+{
+ref:"JOSUÉ 1:9",
+text:"Sé fuerte y valiente. No tengas miedo ni te desanimes, porque el Señor tu Dios estará contigo dondequiera que vayas.",
+reflection:"No necesitás tener todo resuelto para seguir avanzando. Hacé tu parte, confiá y recordá que Dios está con vos en el camino."
+},
+
+{
+ref:"FILIPENSES 4:13",
+text:"Todo lo puedo en Cristo que me fortalece.",
+reflection:"Tal vez hoy el desafío parezca grande. Recordá que tu fuerza no depende solamente de vos. Seguí adelante con fe."
+},
+
+{
+ref:"SALMO 23:4",
+text:"Aunque pase por momentos oscuros, no temeré, porque tú estás conmigo.",
+reflection:"Los momentos difíciles también forman parte del camino. No estás caminando solo."
+},
+
+{
+ref:"ISAÍAS 41:10",
+text:"No temas, porque yo estoy contigo; no desmayes, porque yo soy tu Dios.",
+reflection:"No permitas que el miedo decida por vos. Confiá, avanzá y enfrentá este día sabiendo que Dios está cerca."
+},
+
+{
+ref:"PROVERBIOS 3:5-6",
+text:"Confía en el Señor con todo tu corazón y no te apoyes solamente en tu propio entendimiento.",
+reflection:"No siempre vas a entender lo que está pasando. A veces confiar también significa avanzar sin tener todas las respuestas."
+},
+
+{
+ref:"SALMO 46:1",
+text:"Dios es nuestro refugio y nuestra fuerza, nuestra ayuda segura en momentos de angustia.",
+reflection:"Cuando sientas que tus fuerzas se terminan, recordá que siempre existe un lugar donde volver a encontrar paz."
+},
+
+{
+ref:"ROMANOS 8:28",
+text:"Dios dispone todas las cosas para el bien de quienes lo aman.",
+reflection:"Incluso aquello que hoy no entendés puede estar formando parte de algo que todavía no alcanzás a ver."
+},
+
+{
+ref:"MATEO 11:28",
+text:"Vengan a mí todos ustedes que están cansados y agobiados, y yo les daré descanso.",
+reflection:"No tenés que cargar con todo solo. También es fortaleza saber cuándo entregar aquello que pesa."
+},
+
+{
+ref:"JEREMÍAS 29:11",
+text:"Yo sé los planes que tengo para ustedes: planes de bienestar y no de calamidad, para darles un futuro y una esperanza.",
+reflection:"Que una etapa sea difícil no significa que tu historia termine ahí. Seguí caminando con esperanza."
+},
+
+{
+ref:"SALMO 91:2",
+text:"Él es mi refugio y mi fortaleza, mi Dios, en quien confío.",
+reflection:"Hoy elegí confiar un poco más y preocuparte un poco menos."
+},
+
+{
+ref:"2 CORINTIOS 5:7",
+text:"Vivimos por fe, no por lo que vemos.",
+reflection:"No todo lo importante puede verse inmediatamente. Seguí sembrando, trabajando y creyendo."
+},
+
+{
+ref:"SALMO 37:5",
+text:"Encomienda al Señor tu camino; confía en él.",
+reflection:"Hacé lo que está en tus manos y aprendé también a soltar aquello que no podés controlar."
+},
+
+{
+ref:"ROMANOS 12:12",
+text:"Alégrense en la esperanza, sean pacientes en la dificultad y perseverantes en la oración.",
+reflection:"Hay días para avanzar rápido y otros simplemente para resistir. Ambos también son progreso."
+},
+
+{
+ref:"SALMO 34:18",
+text:"El Señor está cerca de los quebrantados de corazón.",
+reflection:"Si hoy estás atravesando algo difícil, no confundas dolor con abandono. Dios también está presente ahí."
+},
+
+{
+ref:"ISAÍAS 40:31",
+text:"Los que esperan en el Señor renovarán sus fuerzas.",
+reflection:"Descansar, esperar y volver a empezar también forman parte de hacerse fuerte."
+},
+
+{
+ref:"JUAN 14:27",
+text:"La paz les dejo; mi paz les doy. No se angustien ni tengan miedo.",
+reflection:"No dejes que todo lo externo te robe la paz interior. Protegela."
+},
+
+{
+ref:"1 CORINTIOS 16:14",
+text:"Hagan todo con amor.",
+reflection:"La verdadera grandeza también se encuentra en cómo tratamos a las personas que tenemos alrededor."
+},
+
+{
+ref:"SALMO 55:22",
+text:"Deposita en el Señor tus cargas, y él te sostendrá.",
+reflection:"Hay pesos que no fueron hechos para que los cargues permanentemente. Aprendé a entregarlos."
+},
+
+{
+ref:"PROVERBIOS 16:3",
+text:"Pon en manos del Señor todo lo que haces, y tus planes tendrán fundamento.",
+reflection:"Trabajá por tus objetivos, pero recordá también poner tus proyectos en manos de Dios."
+},
+
+{
+ref:"ROMANOS 15:13",
+text:"Que el Dios de la esperanza los llene de alegría y paz mientras confían en él.",
+reflection:"Que hoy tus decisiones nazcan más de la esperanza que del miedo."
+},
+
+{
+ref:"SALMO 118:24",
+text:"Este es el día que hizo el Señor; alegrémonos y disfrutemos de él.",
+reflection:"No esperes a que todo sea perfecto para disfrutar tu vida. Hoy también cuenta."
+},
+
+{
+ref:"MATEO 6:34",
+text:"No se preocupen por el mañana; cada día tiene ya sus propios desafíos.",
+reflection:"Volvé al presente. Hoy solamente necesitás ocuparte del paso que tenés delante."
+},
+
+{
+ref:"HEBREOS 11:1",
+text:"La fe es la certeza de lo que se espera y la convicción de lo que aún no se ve.",
+reflection:"Seguí creyendo también durante las etapas donde todavía no aparecen los resultados."
+},
+
+{
+ref:"SALMO 121:2",
+text:"Mi ayuda viene del Señor, creador del cielo y de la tierra.",
+reflection:"Cuando sientas que no podés con todo, recordá de dónde viene tu verdadera ayuda."
+},
+
+{
+ref:"GÁLATAS 6:9",
+text:"No nos cansemos de hacer el bien, porque a su debido tiempo cosecharemos si no nos damos por vencidos.",
+reflection:"La constancia muchas veces trabaja en silencio. No abandones solamente porque todavía no ves el resultado."
+},
+
+{
+ref:"1 PEDRO 5:7",
+text:"Depositen en él toda ansiedad, porque él cuida de ustedes.",
+reflection:"No todo pensamiento merece quedarse en tu cabeza. Entregá tus preocupaciones y recuperá tu paz."
+},
+
+{
+ref:"JUAN 13:7",
+text:"Ahora no entiendes lo que estoy haciendo, pero más adelante lo comprenderás.",
+reflection:"Quizás hoy no encuentres una explicación. No necesitás entender todo para continuar caminando."
+},
+
+{
+ref:"SALMO 27:1",
+text:"El Señor es mi luz y mi salvación; ¿a quién temeré?",
+reflection:"Que el miedo no tenga más autoridad sobre tu vida que tu fe."
+},
+
+{
+ref:"DEUTERONOMIO 31:8",
+text:"El Señor mismo irá delante de ti. No te dejará ni te abandonará.",
+reflection:"Hay caminos nuevos que generan incertidumbre. Avanzá recordando que no llegás solo."
+},
+
+{
+ref:"SALMO 119:105",
+text:"Tu palabra es una lámpara a mis pies y una luz en mi camino.",
+reflection:"No necesitás ver todo el camino. A veces alcanza con tener luz suficiente para dar el próximo paso."
+}
+
+];
+
+// Cambia automáticamente según el día del año
+const now = new Date();
+const start = new Date(now.getFullYear(), 0, 0);
+const diff = now - start;
+const day = Math.floor(diff / 86400000);
+
+const selected = verses[(day - 1) % verses.length];
+
+document.getElementById("reference").textContent = selected.ref;
+document.getElementById("verse").textContent = "“" + selected.text + "”";
+document.getElementById("reflection").textContent = selected.reflection;
+
+</script>
+
+</body>
+</html>
